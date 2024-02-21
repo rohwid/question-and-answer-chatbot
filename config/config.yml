@@ -1,0 +1,2 @@
+datasets: datasets/SPOTIFY_REVIEWS.csv
+csvloader_datasets: datasets/SPOTIFY_REVIEWS_CSVLOADER.csv
