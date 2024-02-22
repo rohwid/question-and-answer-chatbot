@@ -44,11 +44,11 @@ class QnA:
             openai_api_key=self.config.openai_api_key
         )
         
-        qa = RetrievalQA.from_chain_type(
+        qna_chain = RetrievalQA.from_chain_type(
             llm=llm,
             chain_type="stuff",
             retriever=vectorstore.as_retriever()
         )
 
-        return qa.invoke(query)
+        return qna_chain
         

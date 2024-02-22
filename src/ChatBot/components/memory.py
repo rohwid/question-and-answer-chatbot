@@ -10,7 +10,7 @@ class Memory:
     def __init__(self, config: MemoryConfig):
         self.config = config
 
-    def get_chat_chain(self, qna_result, query):
+    def get_chat_chain(self, qna_result):
         """
         Read pincone_upsert_docs config file and store as config entity
         then apply the dataclasses
@@ -19,7 +19,6 @@ class Memory:
         qa.invoke(query) -> dict: query and the QnA answer
         """
         
-        # Setup prompt to perform as chatbot
         command = """
         %INSTRUCTIONS:
         You are very helpful chatbot.
@@ -42,22 +41,22 @@ class Memory:
         Chatbot:"""
 
         template = command_prompt + chat
+        
+        memory = ConversationBufferMemory(memory_key="chat_history")
 
         prompt = PromptTemplate(
             input_variables=["chat_history", "human_input"], 
             template=template
         )
 
-        memory = ConversationBufferMemory(memory_key="chat_history")
-
         chat_chain = LLMChain(
             llm=OpenAI(
                 model_name=self.config.llm, 
                 openai_api_key=self.config.openai_api_key
             ), 
+            memory=memory,
             prompt=prompt, 
-            verbose=True,
-            memory=memory
+            verbose=True
         )
         
-        return chat_chain.predict(human_input=query)
+        return chat_chain
