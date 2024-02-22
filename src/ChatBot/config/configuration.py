@@ -4,7 +4,9 @@ from pathlib import Path
 from ChatBot.constants import CONFIG_FILE_PATH
 from ChatBot.utils.common import read_yaml, create_directories
 from ChatBot.entity.config_entity import (DataIngestionGDriveConfig,
-                                          PineconeUpsertDocsConfig)
+                                          PineconeUpsertDocsConfig,
+                                          QnAConfig,
+                                          MemoryConfig)
 
 class ConfigurationManager:
     def __init__(self, config_filepath = CONFIG_FILE_PATH):
@@ -34,7 +36,7 @@ class ConfigurationManager:
     
     def get_pincone_upsert_docs_config(self) -> PineconeUpsertDocsConfig:
         """
-        Read data_ingestion config file and store as config entity
+        Read pincone_upsert_docs config file and store as config entity
         then apply the dataclasses
         
         Returns:
@@ -59,7 +61,45 @@ class ConfigurationManager:
             id_prefix=config.id_prefix,
             force_upsert=config.force_upsert
         )
-        
-        pincone_upsert_config.metadata_column
 
         return pincone_upsert_config
+    
+    def get_qna_config(self) -> QnAConfig:
+        """
+        Read qna config file and store as config entity
+        then apply the dataclasses
+        
+        Returns:
+        chat_config: Config for data ingestion
+        """
+        config = self.config.qna
+
+        qna_config = QnAConfig(
+            openai_api_key=os.environ.get('OPENAI_API_KEY'),
+            pincone_api_key=os.environ.get('PINECONE_API_KEY'),
+            pincone_index=os.environ.get('PINECONE_INDEX'),
+            embedding_model=config.embedding_model,
+            document_dimension=config.document_dimension,
+            namespace=config.namespace,
+            llm=config.llm,
+            temperature=config.temperature
+        )
+
+        return qna_config
+    
+    def get_memory_config(self) -> MemoryConfig:
+        """
+        Read memory config file and store as config entity
+        then apply the dataclasses
+        
+        Returns:
+        chat_config: Config for data ingestion
+        """
+        config = self.config.qna
+
+        memory_config = MemoryConfig(
+            openai_api_key=os.environ.get('OPENAI_API_KEY'),
+            llm=config.llm
+        )
+
+        return memory_config

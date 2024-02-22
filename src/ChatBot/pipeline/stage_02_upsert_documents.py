@@ -25,12 +25,12 @@ class PinconeUpsertDocsLLMPipeline:
         pincone = Pinecone(api_key=PINECONE_API_KEY)
         index = pincone.Index(PINECONE_INDEX)
         
-        random_ids = random.sample(range(0, 100), 10)
+        random_ids = random.sample(range(0, 100), 3)
         ids = [f'{id_prefix}-{id}' for id in random_ids]
 
         docs_not_exist = True
         
-        while not ids:
+        while ids:
             try:
                 result = index.fetch(ids=[ids.pop()], namespace=namespace)
             except Exception as err:

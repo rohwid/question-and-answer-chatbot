@@ -26,3 +26,19 @@ class PineconeUpsertDocsConfig:
     document_dimension: str
     id_prefix: str
     force_upsert: bool
+
+@dataclass(frozen=True)
+class QnAConfig:
+    openai_api_key: str
+    pincone_api_key: str
+    pincone_index: str
+    embedding_model: str
+    document_dimension: str
+    namespace: str
+    llm: str
+    temperature: int
+
+@dataclass(frozen=True)
+class MemoryConfig:
+    openai_api_key: str
+    llm: str

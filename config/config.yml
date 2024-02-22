@@ -21,3 +21,13 @@ pincone_upsert_docs:
   document_dimension: 1536
   id_prefix: id
   force_upsert: false
+
+qna:
+  embedding_model: text-embedding-3-large
+  document_dimension: 1536
+  namespace: ns-0
+  llm: gpt-3.5-turbo-instruct
+  temperature: 0
+
+memory:
+  llm: gpt-3.5-turbo-instruct
