@@ -78,3 +78,4 @@ urllib3==2.2.1
 wcwidth==0.2.13
 widgetsnbextension==4.0.10
 yarl==1.9.4
+-e .

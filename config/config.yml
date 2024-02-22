@@ -1,5 +1,23 @@
-dataset: datasets/SPOTIFY_REVIEWS.csv
-load_dataset: datasets/SPOTIFY_REVIEWS_CSVLOADER.csv
-namespace: ns-0
-embedding_model: text-embedding-3-large
-llm_mode: gpt-3.5-turbo-instruct
+ingest_data_from_gdrive:
+  local_data_file: datasets/SPOTIFY_REVIEWS.csv
+
+pincone_upsert_docs:
+  local_data_file: datasets/SPOTIFY_REVIEWS.csv
+  load_data_file: datasets/SPOTIFY_REVIEWS_LOAD.csv
+  data_length: 50
+  source_column: review_id
+  metadata_column:
+  - review_rating
+  - review_likes
+  - author_app_version
+  - review_timestamp
+  - pseudo_author_id
+  - author_name
+  - review_id
+  namespace: ns-0
+  embedding_model: text-embedding-3-large
+  chunk_size: 800
+  chunk_overlap: 0
+  document_dimension: 1536
+  id_prefix: id
+  force_upsert: false
