@@ -1,5 +1,5 @@
-datasets: datasets/SPOTIFY_REVIEWS.csv
-csvloader_datasets: datasets/SPOTIFY_REVIEWS_CSVLOADER.csv
+dataset: datasets/SPOTIFY_REVIEWS.csv
+load_dataset: datasets/SPOTIFY_REVIEWS_CSVLOADER.csv
 namespace: ns-0
 embedding_model: text-embedding-3-large
 llm_mode: gpt-3.5-turbo-instruct
