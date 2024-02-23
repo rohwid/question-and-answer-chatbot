@@ -29,20 +29,18 @@ def get_llm() -> OpenAI:
 def get_qna_chain_in_session(query):
     qna = QnA(qna_config)
     qna_chain = qna.get_qna_chain(query)
-    hint = qna_chain.invoke(query)
+    ref = qna_chain.invoke(query)
     custom_prompt = """
-    {query} And you can use \"{hint}\" as reference.
+    {query} And you can use \"{ref}\" as reference.
     """.format(
         query=query.strip(),
-        hint=hint['result'].strip()
+        ref=ref['result'].strip()
     )
     return custom_prompt
 
 def get_llm_chain():
     template = """
     You are very helpful chatbot.
-    If someone asks about previous question, 
-    please don't use reference and focus on Previous conversation instead.
 
     Previous conversation:
     {chat_history}
