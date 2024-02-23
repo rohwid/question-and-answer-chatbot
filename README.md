@@ -78,8 +78,4 @@ Steps:
 
 ## Demo Videos
 
-<br>
-
-![video](https://github.com/rohwid/question-and-answer-chatbot/assets/9447439/9f54425e-a742-407d-b27b-e836d0b3daaf)
-
-<br>
+https://github.com/rohwid/question-and-answer-chatbot/assets/9447439/cc127384-24aa-496d-b356-809b70c41c0c
