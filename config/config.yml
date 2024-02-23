@@ -7,7 +7,7 @@ ingest_data_from_gdrive:
 pincone_upsert_docs:
   local_data_file: datasets/SPOTIFY_REVIEWS.csv
   load_data_file: datasets/SPOTIFY_REVIEWS_LOAD.csv
-  data_length: 50
+  data_length: -1
   source_column: review_id
   metadata_column:
   - review_rating

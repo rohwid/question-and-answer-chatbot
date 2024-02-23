@@ -40,14 +40,19 @@ Steps:
     python main.py
     ```
 
+- All the configuration params are saved in `config/config.yml`
 - The process will execute the other process like this order:
   - Data ingestion (Automatically download the datasets).
+    - The importan params:
+      - `force_ingest`: set to `True` to replace the current datasets.
   - Upsert the document (Select the useful features (column), Load the CSV as Document, Chunk the documents, Document embedding, and upsert to the Pinecone database).
-  - Evaluatin (Evaluate the LLMs Performance).
+    - The importan params:
+      - `data_length`: to determine the length of the datasets (number of rows as documents).
+      - `force_upsert`: set to `True` to replace the current documents in Pinecone.
+  - Evaluation (Evaluate the LLMs Performance), *this part is already done in `notebook/10_evaluation.ipynb` but I still need time to implement it as part of the pipeline*.
 
 ## Run Application
 
-Steps:
 Steps:
 - Load the environment variables that contains `OPENAI` and `PINECONE` credentials. Then, fill with your credentials. The example of envars were writen in `.env.example` file.
 - Edit and fill `.env.example` and rename it to `.env`.
@@ -62,3 +67,13 @@ Steps:
     ```bash
     streamlit run app.py
     ```
+
+## Screenshots
+
+<br>
+<p align="center" width="100%">
+    <img width="80%" src="img/chat_bot.png">
+</p>
+<br>
+
+## Demo Videos
