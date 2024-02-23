@@ -47,7 +47,7 @@ Steps:
       - `force_ingest`: set to `True` to replace the current datasets.
   - Upsert the document (Select the useful features (column), Load the CSV as Document, Chunk the documents, Document embedding, and upsert to the Pinecone database).
     - The importan params:
-      - `data_length`: to determine the length of the datasets (number of rows as documents).
+      - `data_length`: to determine the length of the datasets (number of rows as documents). With the value set to `-1` are mean upsert all data to Pinecone.
       - `force_upsert`: set to `True` to replace the current documents in Pinecone.
   - Evaluation (Evaluate the LLMs Performance), *this part is already done in `notebook/10_evaluation.ipynb` but I still need time to implement it as part of the pipeline*.
 
