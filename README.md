@@ -68,6 +68,11 @@ Steps:
     streamlit run app.py
     ```
 
+## Future Works
+
+- Convert `notebook/10_evaluation.ipynb` to pipeline.
+- Try more prompt by using [Summarization](https://python.langchain.com/docs/use_cases/summarization) and [Self-Querying](https://python.langchain.com/docs/modules/data_connection/retrievers/self_query/) to improve the ChatBot. Because this is a CSV data and we can use the Metadata as input.
+
 ## Screenshots
 
 <br>
@@ -78,8 +83,4 @@ Steps:
 
 ## Demo Videos
 
-
-
-
 https://github.com/rohwid/question-and-answer-chatbot/assets/9447439/f0585787-8bc6-4ba0-9b57-e971871b78ea
-
