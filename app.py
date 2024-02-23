@@ -1,63 +1,95 @@
+from dataclasses import dataclass
+
+from langchain.chains import LLMChain
+from langchain_openai import OpenAI
+from langchain.memory import ConversationBufferWindowMemory
+from langchain.prompts import PromptTemplate
+
 from ChatBot.components.qna import QnA
-from ChatBot.components.memory import Memory
 from ChatBot.config.configuration import ConfigurationManager
 
 import streamlit as st
 
 config = ConfigurationManager()
+qna_config = config.get_qna_config()
+memory_config = config.get_memory_config()
 
-def qna_chain(query):
-    qna_config = config.get_qna_config()
+@dataclass
+class Message:
+    actor: str
+    payload: str
+
+@st.cache_resource
+def get_llm() -> OpenAI:
+    return OpenAI(
+        model_name=memory_config.llm, 
+        openai_api_key=memory_config.openai_api_key
+    )
+
+def get_qna_chain_in_session(query):
     qna = QnA(qna_config)
     qna_chain = qna.get_qna_chain(query)
-    return qna_chain
+    hint = qna_chain.invoke(query)
+    custom_prompt = """
+    {query} And you can use \"{hint}\" as reference.
+    """.format(
+        query=query.strip(),
+        hint=hint['result'].strip()
+    )
+    return custom_prompt
 
-def chat_chain(qna_result):
-    memory_config = config.get_memory_config()
-    chat = Memory(memory_config)
-    chat_chain = chat.get_chat_chain(qna_result)
-    return chat_chain
+def get_llm_chain():
+    template = """
+    You are very helpful chatbot.
+    If someone asks about previous question, 
+    please don't use reference and focus on Previous conversation instead.
 
-st.set_page_config(
-    page_title="ChatGPT Clone",
-    page_icon="🤖",
-    layout="wide"
-)
+    Previous conversation:
+    {chat_history}
 
+    New human question: {question}
+    Response: """
+    prompt_template = PromptTemplate.from_template(template)
+    
+    memory = ConversationBufferWindowMemory(memory_key="chat_history", k=3)
+    conversation = LLMChain(
+        llm=get_llm(),
+        prompt=prompt_template,
+        verbose=True,
+        memory=memory
+    )
+    return conversation
 
-st.title("ChatGPT Clone")
+USER = "user"
+ASSISTANT = "ai"
+MESSAGES = "messages"
+LLM_CHAIN = "llm_chain"
 
-# check for messages in session and create if not exists
-if "messages" not in st.session_state.keys():
-    st.session_state.messages = [
-        {
-            "role": "assistant", 
-            "content": "Hello there, am ChatGPT clone"
-        }
-    ]
+def initialize_session_state():
+    if MESSAGES not in st.session_state:
+        st.session_state[MESSAGES] = [Message(actor=ASSISTANT, payload="Hi!How can I help you?")]
+    if LLM_CHAIN not in st.session_state:
+        st.session_state[LLM_CHAIN] = get_llm_chain()
 
-# Display all messages
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.write(message["content"])
+def get_llm_chain_from_session() -> LLMChain:
+    return st.session_state[LLM_CHAIN]
 
+initialize_session_state()
 
-user_prompt = st.chat_input()
+msg: Message
+for msg in st.session_state[MESSAGES]:
+    st.chat_message(msg.actor).write(msg.payload)
 
-if user_prompt is not None:
-    st.session_state.messages.append({"role": "user", "content": user_prompt})
-    with st.chat_message("user"):
-        st.write(user_prompt)
+prompt: str = st.chat_input("Enter a prompt here")
 
-if st.session_state.messages[-1]["role"] != "assistant":
-    with st.chat_message("assistant"):
-        with st.spinner("Loading..."):
-            qna_chain = qna_chain(user_prompt)
-            qna_result = qna_chain.invoke(user_prompt)
-            
-            chat_chain = chat_chain(qna_result)
-            ai_response = chat_chain.predict(human_input=f'{user_prompt}')
-            
-            st.write(ai_response)
-    new_ai_message = {"role": "assistant", "content": ai_response}
-    st.session_state.messages.append(new_ai_message)
+if prompt:
+    st.session_state[MESSAGES].append(Message(actor=USER, payload=prompt))
+    st.chat_message(USER).write(prompt)
+
+    with st.spinner("Please wait.."):
+        custom_prompt = get_qna_chain_in_session(prompt)
+        llm_chain = get_llm_chain_from_session()
+        response: str = llm_chain({"question": custom_prompt})["text"]
+        
+        st.session_state[MESSAGES].append(Message(actor=ASSISTANT, payload=response))
+        st.chat_message(ASSISTANT).write(response)

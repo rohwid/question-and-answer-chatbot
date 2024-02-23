@@ -41,22 +41,22 @@ class Memory:
         Chatbot:"""
 
         template = command_prompt + chat
-        
-        memory = ConversationBufferMemory(memory_key="chat_history")
 
         prompt = PromptTemplate(
             input_variables=["chat_history", "human_input"], 
             template=template
         )
 
+        memory = ConversationBufferMemory(memory_key="chat_history")
+
         chat_chain = LLMChain(
             llm=OpenAI(
                 model_name=self.config.llm, 
                 openai_api_key=self.config.openai_api_key
             ), 
-            memory=memory,
             prompt=prompt, 
-            verbose=True
+            verbose=True,
+            memory=memory
         )
         
         return chat_chain
