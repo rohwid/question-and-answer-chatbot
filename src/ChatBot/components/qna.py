@@ -1,6 +1,3 @@
-import os
-
-from ChatBot import logger
 from ChatBot.entity.config_entity import QnAConfig
 
 from pinecone import Pinecone
