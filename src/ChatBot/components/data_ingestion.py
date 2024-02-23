@@ -10,7 +10,10 @@ class DataIngestionGDrive:
 
     def download_file(self):
         """
-        Fetch data from the url
+        Download data from GDrive
+        
+        Raises:
+            e: Error when try to connect GDrive.
         """
         try: 
             dataset_url = self.config.source_URL

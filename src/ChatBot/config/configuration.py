@@ -36,10 +36,10 @@ class ConfigurationManager:
     def get_pincone_upsert_docs_config(self) -> PineconeUpsertDocsConfig:
         """
         Read pincone_upsert_docs config file and store as config entity
-        then apply the dataclasses
+        then apply the dataclasses.
         
         Returns:
-        pincone_upsert_config: Config for data ingestion
+        pincone_upsert_config: Config for data ingestion.
         """
         config = self.config.pincone_upsert_docs
 
@@ -66,10 +66,10 @@ class ConfigurationManager:
     def get_qna_config(self) -> QnAConfig:
         """
         Read qna config file and store as config entity
-        then apply the dataclasses
+        then apply the dataclasses.
         
         Returns:
-        chat_config: Config for data ingestion
+        chat_config: Config for data ingestion.
         """
         config = self.config.qna
 
@@ -89,10 +89,10 @@ class ConfigurationManager:
     def get_memory_config(self) -> MemoryConfig:
         """
         Read memory config file and store as config entity
-        then apply the dataclasses
+        then apply the dataclasses.
         
         Returns:
-        chat_config: Config for data ingestion
+        chat_config: Config for data ingestion.
         """
         config = self.config.qna
 

@@ -13,6 +13,14 @@ class PinconeUpsertDocsLLMPipeline:
         pass
 
     def pipeline(self):
+        """
+        Upsert document to Pincone database and
+        checking is the database exist and contain values
+        or not.
+        
+        Raises:
+            e: Error when hit the Pincone API.
+        """
         config = ConfigurationManager()
         pincone_upsert_docs_config = config.get_pincone_upsert_docs_config()
         

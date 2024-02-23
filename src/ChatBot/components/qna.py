@@ -9,13 +9,16 @@ class QnA:
     def __init__(self, config: QnAConfig):
         self.config = config
 
-    def get_qna_chain(self, query):
+    def get_qna_chain(self, query: str):
         """
         Read pincone_upsert_docs config file and store as config entity
         then apply the dataclasses
         
+        Args:
+            query (str): prompt or query
+        
         Returns:
-        qa.invoke(query) -> dict: query and the QnA answer
+            qa_chain -> obj: Object to invoke query or prompt
         """
         pincone = Pinecone(api_key=self.config.pincone_api_key)
         index = pincone.Index(self.config.pincone_index)

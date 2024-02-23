@@ -9,6 +9,9 @@ class DataIngestionLLMPipeline:
         pass
 
     def gdrive_pipeline(self):
+        """
+        Download data from GDrive.
+        """
         config = ConfigurationManager()
         data_ingestion_config = config.get_data_ingestion_gdrive_config()
         data_ingestion = DataIngestionGDrive(config=data_ingestion_config)
