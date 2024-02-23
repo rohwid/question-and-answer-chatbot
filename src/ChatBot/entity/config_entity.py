@@ -3,11 +3,10 @@ from pathlib import Path
 
 @dataclass(frozen=True)
 class DataIngestionGDriveConfig:
-    root_dir: Path
     source_URL: str
+    local_data_dir: Path
     local_data_file: Path
-    unzip_dir: Path
-    unzip_data: str
+    force_ingest: bool
 
 @dataclass(frozen=True)
 class PineconeUpsertDocsConfig:

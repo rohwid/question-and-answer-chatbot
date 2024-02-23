@@ -32,7 +32,7 @@ class QnA:
         
         vectorstore.similarity_search(
             query,  # our search query
-            k=5  # return 3 most relevant docs
+            k=5  # return 5 most relevant docs
         )
         
         llm = OpenAI(

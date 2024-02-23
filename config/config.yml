@@ -1,5 +1,8 @@
 ingest_data_from_gdrive:
+  source_URL: https://drive.google.com/file/d/1_xaRB6d2K_9-1dUmdU0GjtaqPO7uQnTM/view
+  local_data_dir: datasets
   local_data_file: datasets/SPOTIFY_REVIEWS.csv
+  force_ingest: False
 
 pincone_upsert_docs:
   local_data_file: datasets/SPOTIFY_REVIEWS.csv
@@ -20,7 +23,7 @@ pincone_upsert_docs:
   chunk_overlap: 0
   document_dimension: 1536
   id_prefix: id
-  force_upsert: false
+  force_upsert: False
 
 qna:
   embedding_model: text-embedding-3-large

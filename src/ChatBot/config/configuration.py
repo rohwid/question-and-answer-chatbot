@@ -22,14 +22,13 @@ class ConfigurationManager:
         """
         config = self.config.ingest_data_from_gdrive
 
-        create_directories([config.root_dir])
+        create_directories([config.local_data_dir])
 
         data_ingestion_config = DataIngestionGDriveConfig(
-            root_dir=config.root_dir,
             source_URL=config.source_URL,
+            local_data_dir=config.local_data_dir,
             local_data_file=config.local_data_file,
-            unzip_dir=config.unzip_dir,
-            unzip_data=config.unzip_data
+            force_ingest=config.force_ingest
         )
 
         return data_ingestion_config
