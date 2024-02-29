@@ -62,7 +62,7 @@ Steps:
     export $(grep -v '^#' .env | xargs)
     ```
 
-- Now we can run the execution pipeline by executing the `app.py` with streamlit.
+- Now we can run the streamlit apps by executing the `app.py`.
 
     ```bash
     streamlit run app.py
@@ -72,6 +72,12 @@ Steps:
 
 - Convert `notebook/10_evaluation.ipynb` to pipeline.
 - Try more prompt by using [Summarization](https://python.langchain.com/docs/use_cases/summarization) and [Self-Querying](https://python.langchain.com/docs/modules/data_connection/retrievers/self_query/) to improve the ChatBot. Because this is a CSV data and we can use the Metadata as input.
+- Spliting Upsert the document pipeline into more detail parts like:
+  - Select the useful features (column)
+  - Load the CSV as Documents
+  - Chunk the documents
+  - Document embedding
+  - Upsert to the Pinecone database
 
 ## Screenshots
 

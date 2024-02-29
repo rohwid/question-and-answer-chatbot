@@ -14,6 +14,11 @@ config = ConfigurationManager()
 qna_config = config.get_qna_config()
 memory_config = config.get_memory_config()
 
+USER = "user"
+ASSISTANT = "ai"
+MESSAGES = "messages"
+LLM_CHAIN = "llm_chain"
+
 @dataclass
 class Message:
     actor: str
@@ -21,12 +26,24 @@ class Message:
 
 @st.cache_resource
 def get_llm() -> OpenAI:
+    """
+    Set OPENAI model as streamlit cache
+    
+    Returns:
+        OPENAI -> obj: OPENAI object
+    """
     return OpenAI(
         model_name=memory_config.llm, 
         openai_api_key=memory_config.openai_api_key
     )
 
 def get_qna_chain_in_session(query):
+    """
+    Load query and proced by Langchain QnA chain
+    
+    Returns:
+        custom_prompt -> str: custom prompt as the result of QnA
+    """
     qna = QnA(qna_config)
     qna_chain = qna.get_qna_chain(query)
     ref = qna_chain.invoke(query)
@@ -39,6 +56,12 @@ def get_qna_chain_in_session(query):
     return custom_prompt
 
 def get_llm_chain():
+    """
+    Chat session with langchain memory and LLMChain
+    
+    Returns:
+        conversation -> obj: LLMChain object with prompt and memory
+    """
     template = """
     You are very helpful chatbot.
 
@@ -58,18 +81,19 @@ def get_llm_chain():
     )
     return conversation
 
-USER = "user"
-ASSISTANT = "ai"
-MESSAGES = "messages"
-LLM_CHAIN = "llm_chain"
-
 def initialize_session_state():
+    """
+    Initialize the message and model in LLMChain object
+    """
     if MESSAGES not in st.session_state:
         st.session_state[MESSAGES] = [Message(actor=ASSISTANT, payload="Hi!How can I help you?")]
     if LLM_CHAIN not in st.session_state:
         st.session_state[LLM_CHAIN] = get_llm_chain()
 
 def get_llm_chain_from_session() -> LLMChain:
+    """
+    Call the model in LLMChain object to answer the question
+    """
     return st.session_state[LLM_CHAIN]
 
 initialize_session_state()
