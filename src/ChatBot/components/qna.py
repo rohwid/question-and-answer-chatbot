@@ -18,7 +18,7 @@ class QnA:
             query (str): prompt or query
         
         Returns:
-            qa_chain -> obj: Object to invoke query or prompt
+            qa_chain (obj): Object to invoke query or prompt
         """
         pincone = Pinecone(api_key=self.config.pincone_api_key)
         index = pincone.Index(self.config.pincone_index)

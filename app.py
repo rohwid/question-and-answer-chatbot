@@ -30,7 +30,7 @@ def get_llm() -> OpenAI:
     Set OPENAI model as streamlit cache
     
     Returns:
-        OPENAI -> obj: OPENAI object
+        OPENAI (obj): object to load OPENAI model
     """
     return OpenAI(
         model_name=memory_config.llm, 
@@ -42,7 +42,7 @@ def get_qna_chain_in_session(query):
     Load query and proced by Langchain QnA chain
     
     Returns:
-        custom_prompt -> str: custom prompt as the result of QnA
+        custom_prompt (str): custom prompt as the result of QnA
     """
     qna = QnA(qna_config)
     qna_chain = qna.get_qna_chain(query)
@@ -60,7 +60,7 @@ def get_llm_chain():
     Chat session with langchain memory and LLMChain
     
     Returns:
-        conversation -> obj: LLMChain object with prompt and memory
+        conversation (obj): LLMChain object with prompt and memory
     """
     template = """
     You are very helpful chatbot.

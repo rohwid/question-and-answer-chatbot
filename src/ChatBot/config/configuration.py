@@ -18,7 +18,7 @@ class ConfigurationManager:
         then apply the dataclasses
         
         Returns:
-        data_ingestion_config: Config for data ingestion
+            data_ingestion_config (obj): Config for data ingestion
         """
         config = self.config.ingest_data_from_gdrive
 
@@ -39,7 +39,7 @@ class ConfigurationManager:
         then apply the dataclasses.
         
         Returns:
-        pincone_upsert_config: Config for data ingestion.
+            pincone_upsert_config (obj): Config for data ingestion.
         """
         config = self.config.pincone_upsert_docs
 
@@ -69,7 +69,7 @@ class ConfigurationManager:
         then apply the dataclasses.
         
         Returns:
-        chat_config: Config for data ingestion.
+            chat_config (obj): Config for data ingestion.
         """
         config = self.config.qna
 
@@ -92,7 +92,7 @@ class ConfigurationManager:
         then apply the dataclasses.
         
         Returns:
-        chat_config: Config for data ingestion.
+            chat_config (obj): Config for data ingestion.
         """
         config = self.config.qna
 

@@ -18,8 +18,8 @@ class PinconeUpsertDocs:
         Upsert data to Pincone vector database.
         
         Raises:
-            e: Error when try to user OpenAI API 
-               and connect Pincone Database.
+            e: Error when try to use OpenAI API 
+               or connect Pincone Database.
         """
         logger.info(f"Reading dataset.")
         df = pd.read_csv(self.config.local_data_file)
